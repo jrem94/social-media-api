@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class UserController {
 	}
 	
 	@GetMapping
-	public ArrayList<User> getUsers(){
+	public List<User> getUsers(){
 		return this.userService.getUsers();
 	}
 	

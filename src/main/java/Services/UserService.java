@@ -1,39 +1,73 @@
 package Services;
 
 import java.util.ArrayList;
-import org.springframework.stereotype.*;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import DTOs.CredentialsDto;
 import Entities.User;
 import Interfaces.Tweet;
+import Mappers.CredentialsDtoMapper;
+import Mappers.ProfileCredentialsDtoMapper;
+import Mappers.UserDtoMapper;
+import Repositories.UserRepository;
 import RequestDtos.ProfileCredentialsDto;
 
 @Service
 public class UserService {
 
-	public ArrayList<User> getUsers() {
-		// TODO Auto-generated method stub
-		return null;
+	private UserRepository userRepository;
+	private UserDtoMapper userDtoMapper;
+	private CredentialsDtoMapper credentialsDtoMapper;
+	private ProfileCredentialsDtoMapper profileCredentialsDtoMapper;
+	
+	public UserService(UserRepository userRepository, UserDtoMapper userDtoMapper,
+			CredentialsDtoMapper credentialsDtoMapper, ProfileCredentialsDtoMapper profileCredentialsDtoMapper) {
+		this.userRepository = userRepository;
+		this.userDtoMapper = userDtoMapper;
+		this.credentialsDtoMapper = credentialsDtoMapper;
+		this.profileCredentialsDtoMapper = profileCredentialsDtoMapper;
+	}
+	
+	public List<User> getUsers() {
+		List<User> users = new ArrayList<User>();
+		users = this.userRepository.findAll();
+		return users;
 	}
 
 	public User postUser(ProfileCredentialsDto profileCredentialsDto) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.userRepository.save(this.profileCredentialsDtoMapper.dtoToUser(profileCredentialsDto));
 	}
 
 	public User getUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		Integer userId = null;
+		List<User> users = getUsers();
+		for(User user : users) {
+			if(user.getUsername() == username) {
+				userId = user.getId();
+			}
+		}
+		return this.userRepository.getOne(userId);
 	}
 
+	//check logic
 	public User updateProfile(String username, ProfileCredentialsDto profileCredentialsDto) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = getUser(username);
+		user.setCredentials(profileCredentialsDto.getCredentials());
+		user.setProfile(profileCredentialsDto.getProfile());
+		return this.userRepository.save(user);
 	}
 
+	//check logic
 	public User deleteUser(String username, CredentialsDto credentialsDto) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = getUser(username);
+		User priorToDeletion = user;
+		if(user.getCredentials() == this.credentialsDtoMapper.dtoToUser(credentialsDto).getCredentials()) {
+			user.setActive(false);
+			this.userRepository.save(user);
+		}
+		return priorToDeletion;
 	}
 
 	public void followUser(String username, CredentialsDto credentialsDto) {

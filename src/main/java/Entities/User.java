@@ -1,7 +1,6 @@
 package Entities;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +17,8 @@ public class User {
 	private Credentials credentials;
 	@Column(updatable = false)
 	private Timestamp joined;
+	@Column
+	private boolean isActive;
 	
 	public User() {}
 	
@@ -25,6 +26,14 @@ public class User {
 		this.username = username;
 		this.profile = profile;
 		this.joined = joined;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -43,6 +52,14 @@ public class User {
 		this.profile = profile;
 	}
 
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
 	public Timestamp getJoined() {
 		return joined;
 	}
@@ -51,27 +68,14 @@ public class User {
 		this.joined = joined;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(joined, profile, username);
+	public boolean isActive() {
+		return isActive;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return Objects.equals(joined, other.joined) && Objects.equals(profile, other.profile)
-				&& Objects.equals(username, other.username);
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
-	@Override
-	public String toString() {
-		return "User [username=" + username + ", profile=" + profile + ", joined=" + joined + "]";
-	}
+	
 	
 }

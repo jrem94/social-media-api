@@ -2,7 +2,7 @@ package com.cooksys.ftd.springboot.Entities;
 
 import java.util.Objects;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 
 @Embeddable
 public class Profile {
@@ -11,9 +11,10 @@ public class Profile {
 	private String lastname;
 	private String email;
 	private String phone;
-	
-	public Profile() {}
-	
+
+	public Profile() {
+	}
+
 	public Profile(String firstname, String lastname, String email, String phone) {
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -76,4 +77,5 @@ public class Profile {
 		return "Profile [firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", phone=" + phone
 				+ "]";
 	}
+
 }

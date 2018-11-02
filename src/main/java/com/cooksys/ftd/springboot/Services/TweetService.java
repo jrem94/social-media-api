@@ -19,23 +19,19 @@ import com.cooksys.ftd.springboot.RequestDtos.ContentCredentialsDto;
 
 @Service
 public class TweetService {
-	
+
 	private TweetRepository tweetRepository;
 	private UserRepository userRepository;
-	private ContentCredentialsDtoMapper contentCredentialsDtoMapper;
 	private CredentialsDtoMapper credentialsDtoMapper;
-	
-	
 
 	public TweetService(TweetRepository tweetRepository, UserRepository userRepository,
 			ContentCredentialsDtoMapper contentCredentialsDtoMapper, CredentialsDtoMapper credentialsDtoMapper) {
 		this.tweetRepository = tweetRepository;
 		this.userRepository = userRepository;
-		this.contentCredentialsDtoMapper = contentCredentialsDtoMapper;
 		this.credentialsDtoMapper = credentialsDtoMapper;
 	}
 
-	//Get all non-deleted tweets in reverse chronological order.
+	// Get all non-deleted tweets in reverse chronological order.
 	public List<Tweet> getTweets() {
 		return this.tweetRepository.findAll();
 	}
@@ -43,39 +39,39 @@ public class TweetService {
 	public Tweet postTweets(ContentCredentialsDto contentCredentialsDto) {
 		Tweet tweet = new Tweet();
 		List<User> users = this.userRepository.findAll();
-		for(User user : users) {
-			if(user.getCredentials().equals(contentCredentialsDto.getCredentials())) {
+		for (User user : users) {
+			if (user.getCredentials().equals(contentCredentialsDto.getCredentials())) {
 				tweet.setAuthor(user);
 				tweet.setContent(contentCredentialsDto.getContent());
 				return this.tweetRepository.save(tweet);
 			}
 		}
-		return null; //throw 400 error
+		return null; // throw 400 error
 	}
 
 	public Tweet getTweetById(Integer id) {
 		List<Tweet> tweets = getTweets();
-		for(Tweet tweet : tweets) {
-			if(tweet.getId() == id) {
+		for (Tweet tweet : tweets) {
+			if (tweet.getId() == id) {
 				return tweet;
 			}
 		}
-		return null; //throw 400 error
+		return null; // throw 400 error
 	}
 
 	public Tweet deleteTweetById(Integer id, CredentialsDto credentialsDto) {
 		Tweet tweet = getTweetById(id);
-		if(tweet.getAuthor().getCredentials().equals(credentialsDtoMapper.dtoToUser(credentialsDto))) {
+		if (tweet.getAuthor().getCredentials().equals(credentialsDtoMapper.dtoToUser(credentialsDto))) {
 			tweet.setNotDeleted(false);
 			return this.tweetRepository.save(tweet);
 		}
-		return null; //throw 400 error
+		return null; // throw 400 error
 	}
 
 	public void likeTweetById(Integer id, CredentialsDto credentialsDto) {
 		Tweet tweet = getTweetById(id);
-		if(tweet.getAuthor().getCredentials().equals(credentialsDtoMapper.dtoToUser(credentialsDto))) {
-			//TODO implement like relationship in Tweet.
+		if (tweet.getAuthor().getCredentials().equals(credentialsDtoMapper.dtoToUser(credentialsDto))) {
+			// TODO implement like relationship in tweet.
 		}
 	}
 
@@ -122,5 +118,5 @@ public class TweetService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

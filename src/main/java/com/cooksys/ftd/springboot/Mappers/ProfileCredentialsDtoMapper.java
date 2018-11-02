@@ -7,8 +7,9 @@ import com.cooksys.ftd.springboot.RequestDtos.ProfileCredentialsDto;
 
 @Mapper(componentModel = "spring")
 public interface ProfileCredentialsDtoMapper {
-	
+
 	User dtoToUser(ProfileCredentialsDto dto);
+
 	ProfileCredentialsDto userToDto(User user);
 
 }

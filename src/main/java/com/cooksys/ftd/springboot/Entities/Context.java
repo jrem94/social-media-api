@@ -3,7 +3,6 @@ package com.cooksys.ftd.springboot.Entities;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,9 +18,10 @@ public class Context {
 	private Tweet target;
 	private ArrayList<Tweet> before;
 	private ArrayList<Tweet> after;
-	
-	public Context() {}
-	
+
+	public Context() {
+	}
+
 	public Context(Tweet target, ArrayList<Tweet> before, ArrayList<Tweet> after) {
 		this.target = target;
 		this.before = before;
@@ -62,7 +62,7 @@ public class Context {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(after, before, target);
+		return Objects.hash(after, before, id, target);
 	}
 
 	@Override
@@ -75,12 +75,12 @@ public class Context {
 			return false;
 		Context other = (Context) obj;
 		return Objects.equals(after, other.after) && Objects.equals(before, other.before)
-				&& Objects.equals(target, other.target);
+				&& Objects.equals(id, other.id) && Objects.equals(target, other.target);
 	}
 
 	@Override
 	public String toString() {
-		return "Context [target=" + target + ", before=" + before + ", after=" + after + "]";
+		return "Context [id=" + id + ", target=" + target + ", before=" + before + ", after=" + after + "]";
 	}
-	
+
 }

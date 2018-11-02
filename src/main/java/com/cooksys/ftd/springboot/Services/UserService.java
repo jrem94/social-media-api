@@ -19,14 +19,14 @@ public class UserService {
 	private UserRepository userRepository;
 	private CredentialsDtoMapper credentialsDtoMapper;
 	private ProfileCredentialsDtoMapper profileCredentialsDtoMapper;
-	
+
 	public UserService(UserRepository userRepository, CredentialsDtoMapper credentialsDtoMapper,
 			ProfileCredentialsDtoMapper profileCredentialsDtoMapper) {
 		this.userRepository = userRepository;
 		this.credentialsDtoMapper = credentialsDtoMapper;
 		this.profileCredentialsDtoMapper = profileCredentialsDtoMapper;
 	}
-	
+
 	public List<User> getUsers() {
 		return this.userRepository.findAll();
 	}
@@ -38,8 +38,8 @@ public class UserService {
 	public User getUser(String username) {
 		Integer userId = null;
 		List<User> users = getUsers();
-		for(User user : users) {
-			if(user.getCredentials().getUsername() == username) {
+		for (User user : users) {
+			if (user.getCredentials().getUsername() == username) {
 				userId = user.getId();
 			}
 		}
@@ -47,19 +47,19 @@ public class UserService {
 	}
 
 	public User updateProfile(String username, ProfileCredentialsDto profileCredentialsDto) {
-		if(username.equals(profileCredentialsDto.getCredentials().getUsername())) {
+		if (username.equals(profileCredentialsDto.getCredentials().getUsername())) {
 			User user = getUser(username);
-			if(user.getCredentials().getPassword().equals(profileCredentialsDto.getCredentials().getPassword())) {
+			if (user.getCredentials().getPassword().equals(profileCredentialsDto.getCredentials().getPassword())) {
 				user.setProfile(profileCredentialsDto.getProfile());
 				return this.userRepository.save(user);
 			}
 		}
-		return null; //throw 400 error
+		return null; // throw 400 error
 	}
 
 	public User deleteUser(String username, CredentialsDto credentialsDto) {
 		User user = getUser(username);
-		if(user.getCredentials() == this.credentialsDtoMapper.dtoToUser(credentialsDto).getCredentials()) {
+		if (user.getCredentials() == this.credentialsDtoMapper.dtoToUser(credentialsDto).getCredentials()) {
 			user.setActive(false);
 			this.userRepository.save(user);
 		}
@@ -69,8 +69,8 @@ public class UserService {
 	public void followUser(String username, CredentialsDto credentialsDto) {
 		User target = getUser(username);
 		User subscriber = getUser(credentialsDto.getUsername());
-		if(subscriber.getCredentials() == this.credentialsDtoMapper.dtoToUser(credentialsDto).getCredentials()) {
-			if(!subscriber.getFollowing().contains(target) && target.isActive() == true){
+		if (subscriber.getCredentials() == this.credentialsDtoMapper.dtoToUser(credentialsDto).getCredentials()) {
+			if (!subscriber.getFollowing().contains(target) && target.isActive() == true) {
 				target.addFollowers(subscriber);
 				this.userRepository.save(target);
 				subscriber.addToFollowing(target);
@@ -83,42 +83,43 @@ public class UserService {
 	public void unfollowUser(String username, CredentialsDto credentialsDto) {
 		User target = getUser(username);
 		User subscriber = getUser(credentialsDto.getUsername());
-		if(subscriber.getCredentials().equals(credentialsDto)) {
-			if(!subscriber.getFollowing().contains(target) && target.isActive() == true){
-				target.removeFollowers(subscriber);;
+		if (subscriber.getCredentials().equals(credentialsDto)) {
+			if (!subscriber.getFollowing().contains(target) && target.isActive() == true) {
+				target.removeFollowers(subscriber);
+				;
 				this.userRepository.save(target);
 				subscriber.removeFromFollowing(target);
 				this.userRepository.save(subscriber);
 			}
 		}
-		//throw 400 error
+		// throw 400 error
 	}
 
 	public List<Tweet> getFeed(String username) {
-		if(getUsers().contains(getUser(username)) || getUser(username).isActive()) {
+		if (getUsers().contains(getUser(username)) || getUser(username).isActive()) {
 			List<Tweet> feed = new ArrayList<Tweet>();
 			User user = getUser(username);
 			List<User> following = user.getFollowing();
-			for(User follow : following) {
+			for (User follow : following) {
 				List<Tweet> tweets = follow.getTweets();
-				for(Tweet tweet : tweets) {
+				for (Tweet tweet : tweets) {
 					feed.add(tweet);
 				}
 			}
 			return feed;
 		}
-		return null; //throw 400 error
+		return null; // throw 400 error
 	}
 
 	public List<Tweet> getTweets(String username) {
-		if(getUsers().contains(getUser(username)) || getUser(username).isActive()) {
+		if (getUsers().contains(getUser(username)) || getUser(username).isActive()) {
 			User user = getUser(username);
-			return user.getTweets(); //needs to be in reverse chronological order
+			return user.getTweets(); // needs to be in reverse chronological order
 		}
-		return null; //throw 400 error
+		return null; // throw 400 error
 	}
 
-	//Add mentions to Tweet
+	// Add mentions to Tweet
 	public List<Tweet> getMentions(String username) {
 		// TODO Auto-generated method stub
 		return null;

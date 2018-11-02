@@ -16,19 +16,19 @@ import com.cooksys.ftd.springboot.Services.TagService;
 public class TagController {
 
 	private TagService tagService;
-	
+
 	public TagController(TagService tagService) {
 		this.tagService = tagService;
 	}
-	
+
 	@GetMapping
-	public ArrayList<Hashtag> getTags(){
+	public ArrayList<Hashtag> getTags() {
 		return this.tagService.getTags();
 	}
-	
+
 	@GetMapping("/{label}")
-	public ArrayList<Tweet> getTweetsByTag(@PathVariable("label") String label){
+	public ArrayList<Tweet> getTweetsByTag(@PathVariable("label") String label) {
 		return this.tagService.getTweetsByTag(label);
 	}
-	
+
 }

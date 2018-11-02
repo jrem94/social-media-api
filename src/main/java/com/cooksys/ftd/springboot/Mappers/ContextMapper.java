@@ -9,6 +9,7 @@ import com.cooksys.ftd.springboot.Entities.Context;
 public interface ContextMapper {
 
 	Context contextDtoToContext(ContextDto contextDto);
+
 	ContextDto contextToContextDto(Context context);
-	
+
 }

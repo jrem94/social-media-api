@@ -3,11 +3,14 @@ package com.cooksys.ftd.springboot.Entities;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Hashtag {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
@@ -15,9 +18,10 @@ public class Hashtag {
 	private String label;
 	private Timestamp firstUsed;
 	private Timestamp lastUsed;
-	
-	public Hashtag() {}
-	
+
+	public Hashtag() {
+	}
+
 	public Hashtag(String label, Timestamp firstUsed, Timestamp lastUsed) {
 		this.label = label;
 		this.firstUsed = firstUsed;
@@ -58,7 +62,7 @@ public class Hashtag {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstUsed, label, lastUsed);
+		return Objects.hash(firstUsed, id, label, lastUsed);
 	}
 
 	@Override
@@ -70,13 +74,13 @@ public class Hashtag {
 		if (getClass() != obj.getClass())
 			return false;
 		Hashtag other = (Hashtag) obj;
-		return Objects.equals(firstUsed, other.firstUsed) && Objects.equals(label, other.label)
-				&& Objects.equals(lastUsed, other.lastUsed);
+		return Objects.equals(firstUsed, other.firstUsed) && Objects.equals(id, other.id)
+				&& Objects.equals(label, other.label) && Objects.equals(lastUsed, other.lastUsed);
 	}
 
 	@Override
 	public String toString() {
-		return "Hashtag [label=" + label + ", firstUsed=" + firstUsed + ", lastUsed=" + lastUsed + "]";
+		return "Hashtag [id=" + id + ", label=" + label + ", firstUsed=" + firstUsed + ", lastUsed=" + lastUsed + "]";
 	}
 
 }

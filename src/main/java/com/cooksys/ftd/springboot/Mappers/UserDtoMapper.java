@@ -7,7 +7,8 @@ import com.cooksys.ftd.springboot.Entities.User;
 
 @Mapper(componentModel = "spring")
 public interface UserDtoMapper {
-	
+
 	User dtoToUser(UserDto dto);
+
 	UserDto userToDto(User user);
 }

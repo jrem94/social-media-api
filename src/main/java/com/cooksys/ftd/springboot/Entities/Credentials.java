@@ -2,16 +2,17 @@ package com.cooksys.ftd.springboot.Entities;
 
 import java.util.Objects;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 
 @Embeddable
 public class Credentials {
 
 	private String username;
 	private String password;
-	
-	public Credentials() {}
-	
+
+	public Credentials() {
+	}
+
 	public Credentials(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -54,5 +55,5 @@ public class Credentials {
 	public String toString() {
 		return "Credentials [username=" + username + ", password=" + password + "]";
 	}
-	
+
 }

@@ -7,13 +7,9 @@ import javax.persistence.*;
 @Embeddable
 public class Profile {
 
-	@Column
 	private String firstname;
-	@Column
 	private String lastname;
-	@Column(nullable = false)
 	private String email;
-	@Column
 	private String phone;
 	
 	public Profile() {}

@@ -6,6 +6,4 @@ import com.cooksys.ftd.springboot.Entities.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-	
-	
 }

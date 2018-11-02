@@ -8,7 +8,6 @@ import com.cooksys.ftd.springboot.Entities.User;
 @Mapper(componentModel = "spring")
 public interface CredentialsDtoMapper {
 
-    //Map User to CredentialsDto
 	User dtoToUser(CredentialsDto dto);
 	CredentialsDto userToDto(User user);
 	

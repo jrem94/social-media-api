@@ -75,12 +75,11 @@ public class TweetService {
 	public void likeTweetById(Integer id, CredentialsDto credentialsDto) {
 		Tweet tweet = getTweetById(id);
 		if(tweet.getAuthor().getCredentials().equals(credentialsDtoMapper.dtoToUser(credentialsDto))) {
-			
+			//TODO implement like relationship in Tweet.
 		}
 	}
 
 	public Tweet replyWithTweet(Integer id, String content, Credentials credentials) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -123,6 +122,5 @@ public class TweetService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
 }

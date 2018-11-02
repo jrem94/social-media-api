@@ -17,9 +17,7 @@ public class Context {
 	private Integer id;
 	@OneToMany
 	private Tweet target;
-	@Column
 	private ArrayList<Tweet> before;
-	@Column
 	private ArrayList<Tweet> after;
 	
 	public Context() {}

@@ -12,11 +12,8 @@ public class Hashtag {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 
-	@Column
 	private String label;
-	@Column
 	private Timestamp firstUsed;
-	@Column
 	private Timestamp lastUsed;
 	
 	public Hashtag() {}

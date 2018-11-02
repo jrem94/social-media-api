@@ -16,7 +16,6 @@ public class User {
 	private Credentials credentials;
 	@Column(updatable = false)
 	private Timestamp joined;
-	@Column
 	private boolean isActive = true;
 	@ManyToMany
 	private List<User> followers;

@@ -19,6 +19,7 @@ public class Tweet {
 	private List<Tweet> inReplyTo;
 	@ManyToMany
 	private List<Tweet> repostOf;
+	private boolean isNotDeleted = true;
 	
 	public Integer getId() {
 		return id;
@@ -56,5 +57,13 @@ public class Tweet {
 	public void setRepostOf(List<Tweet> repostOf) {
 		this.repostOf = repostOf;
 	}
+	public boolean isNotDeleted() {
+		return isNotDeleted;
+	}
+	public void setNotDeleted(boolean isNotDeleted) {
+		this.isNotDeleted = isNotDeleted;
+	}
+	
+	
 
 }
